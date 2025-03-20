@@ -49,7 +49,12 @@ should be placed in `tests/authorService.test.ts`.
 
 Briefly explain a limitation of the tests in `tests/authorSchema.test.ts` in the space below.
 
-
+- One main limitation of tests/authorSchema.test.ts is that the static methods (getAuthorCount, getAllAuthors, getAuthorIdByName) are not actually being tested because the internal MongoDB methods (countDocuments, findOne, find) are fully mocked using Jest. Since these mocks return predefined values without executing real database queries, the tests only verify that the mocked function was called with expected parameters. The tests don’t check if the actual database queries work correctly. For example, the getAuthorCount test will pass no matter what because countDocuments is hardcoded to return a fixed number. This means we’re not verifying if the method handles real database constraints, filters, or sorting properly, it just verifies that the mock returns what we expect.
+- Our tests do not confirm whether:
+  - The actual MongoDB queries are correct.
+  - The database constraints (e.g., unique indexes, query filters, sorting) work.
+  - The Mongoose middleware, hooks, and error handling work.
+- In order to make the tests more meaningful, we should use an in-memory MongoDB database like mongodb-memory-server to test against a real database by executing actual queries. Doing this will confirm the above points by testing against an actual database.
 
 ## Part 3
 
