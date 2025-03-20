@@ -17,6 +17,10 @@ Run coverage
 
 View coverage report in `coverage/lcov-report/index.html`
 
+**Windows Note**: If you are on Windows and the above commands do not run
+because of NODE_ENV not recognized then first set the environment variable from the terminal using `SET NODE_ENV=test` and then
+run the jest command `npx jest --covereage /path/to/test/file`. The coverage is optional.
+
 The followung database scripts are not necessary. If you still need
 them for manual testing here they are:
 

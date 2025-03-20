@@ -3,64 +3,70 @@ import Author, { IAuthor } from "../models/author";
 
 describe('Verify author schema', () => {
     test('should be invalid if first name is empty', async () => {
-        const author = new Author({});
-        author.family_name = 'Doe';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            family_name: 'Doe',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         const validationError = author.validateSync();
         expect(validationError).toBeDefined();
         expect(validationError?.errors.first_name).toBeDefined();
     });
 
     test('should be invalid if first name is greater than 100 characters', async () => {
-        const author = new Author({});
-        author.first_name = 'a'.repeat(101);
-        author.family_name = 'Doe';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            first_name: 'a'.repeat(101),
+            family_name: 'Doe',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         const validationError = author.validateSync();
         expect(validationError).toBeDefined();
         expect(validationError?.errors.first_name).toBeDefined();
     });
 
     test('should be invalid if family name is empty', async () => {
-        const author = new Author({});
-        author.first_name = 'John';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            first_name: 'John',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         const validationError = author.validateSync();
         expect(validationError).toBeDefined();
         expect(validationError?.errors.family_name).toBeDefined();
     });
 
     test('should be invalid if family name is greater than 100 characters', async () => {
-        const author = new Author({});
-        author.first_name = 'John';
-        author.family_name = 'a'.repeat(101);
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            first_name: 'John',
+            family_name: 'a'.repeat(101),
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         const validationError = author.validateSync();
         expect(validationError).toBeDefined();
         expect(validationError?.errors.family_name).toBeDefined();
     });
 
     test('should be invalid if date of birth is not a valid date', async () => {
-        const author = new Author({});
-        author.first_name = 'John';
-        author.family_name = 'Doe';
-        author.date_of_birth = new Date('2020-27-12');
-        author.date_of_death = new Date('2020-12-27');
+        const author = new Author({
+            first_name: 'John',
+            family_name: 'Doe',
+            date_of_birth: new Date('2020-27-12'),
+            date_of_death: new Date('2020-12-27')
+        });
         const validationError = author.validateSync();
         expect(validationError).toBeDefined();
         expect(validationError?.errors.date_of_birth).toBeDefined();
     });
 
     test('should be invalid if date of death is not a valid date', async () => {
-        const author = new Author({});
-        author.first_name = 'John';
-        author.family_name = 'Doe';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-27-12');
+        const author = new Author({
+            first_name: 'John',
+            family_name: 'Doe',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-27-12')
+        });
         const validationError = author.validateSync();
         expect(validationError).toBeDefined();
         expect(validationError?.errors.date_of_death).toBeDefined();
@@ -69,36 +75,40 @@ describe('Verify author schema', () => {
 
 describe('Verify author schema virtuals', () => {
     test('should return the full name of the author', async () => {
-        const author = new Author({});
-        author.first_name = 'John';
-        author.family_name = 'Doe';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            first_name: 'John',
+            family_name: 'Doe',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         expect(author.name).toBe('Doe, John');
     });
 
     test('should return empty string if first name is missing', async () => {
-        const author = new Author({});
-        author.first_name = '';
-        author.family_name = 'Doe';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            first_name: '',
+            family_name: 'Doe',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         expect(author.name).toBe('');
     });
 
     test('should return empty string if family name is missing', async () => {
-        const author = new Author({});
-        author.first_name = 'John';
-        author.family_name = '';
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            first_name: 'John',
+            family_name: '',
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         expect(author.name).toBe('');
     });
 
     test('should return empty string if both first and family names are missing', async () => {
-        const author = new Author({});
-        author.date_of_birth = new Date('1990-01-01');
-        author.date_of_death = new Date('2020-01-01');
+        const author = new Author({
+            date_of_birth: new Date('1990-01-01'),
+            date_of_death: new Date('2020-01-01')
+        });
         expect(author.name).toBe('');
     });
 

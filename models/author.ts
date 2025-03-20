@@ -10,12 +10,12 @@ import mongoose, { Schema, Document, Model, FilterQuery } from 'mongoose';
  * @property lifespan - The author's lifespan.
  */
 export interface IAuthor extends Document {
-  first_name: string;
-  family_name: string;
-  date_of_birth?: Date;
-  date_of_death?: Date;
-  name: string;
-  lifespan: string;
+  readonly first_name: string;
+  readonly family_name: string;
+  readonly date_of_birth?: Date;
+  readonly date_of_death?: Date;
+  readonly name: string;
+  readonly lifespan: string;
 }
 
 /**

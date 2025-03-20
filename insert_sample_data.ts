@@ -51,10 +51,30 @@ async function authorCreate(
     first_name: first_name, 
     family_name: family_name,
   };
-  if (d_birth != false) authordetail.date_of_birth = new Date(d_birth);
-  if (d_death != false) authordetail.date_of_death = new Date(d_death);
+  let author = new Author(authordetail);
+  if (d_birth != false && d_death === false) {
+    author = new Author({
+      first_name: first_name,
+      family_name: family_name,
+      date_of_birth: new Date(d_birth)
+    });
+  }
+  if (d_death != false && d_birth === false) {
+    author = new Author({
+      first_name: first_name, 
+      family_name: family_name,
+      date_of_death: new Date(d_death)
+    });
+  }
 
-  const author = new Author(authordetail);
+  if(d_birth != false && d_death != false) {
+    author = new Author({
+      first_name: first_name,
+      family_name: family_name,
+      date_of_birth: new Date(d_birth),
+      date_of_death: new Date(d_death)
+    });
+  }
 
   await author.save();
   authors.push(author);
